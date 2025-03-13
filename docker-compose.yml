@@ -1,10 +1,30 @@
 version: '3.1'
 
 services:
-  tb:
+  tb-db:
+    image: mysql:8.0.15
+    container_name: mysql
+    restart: 'no'
+    environment:
+      MYSQL_DATABASE: 'tb_db'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: ${BOT_DB_USERNAME}
+      # You can use whatever password you like
+      MYSQL_PASSWORD: ${BOT_DB_PASSWORD}
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'root'
+
+    ports:
+      # <Port exposed> : <MySQL Port running inside container>
+      - '3307:3306'
+  tb-bot:
     build:
       context: .
     environment:
-      - BOT_NAME=${BOT_NAME}
-      - BOT_TOKEN=${BOT_TOKEN}
-    restart: "no"
+      BOT_NAME: ${BOT_NAME}
+      BOT_TOKEN: ${BOT_TOKEN}
+      BOT_DB_USERNAME: ${BOT_DB_USERNAME}
+      BOT_DB_PASSWORD: ${BOT_DB_PASSWORD}
+    restart: always
+    depends_on:
+      - tb-db

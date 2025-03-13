@@ -2,6 +2,8 @@ package com.github.dosaev.tb.bot;
 
 import com.github.dosaev.tb.command.CommandContainer;
 import com.github.dosaev.tb.service.SendBotMessageServiceImpl;
+import com.github.dosaev.tb.service.TelegramUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -22,8 +24,9 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private final CommandContainer commandContainer;
 
-    public TelegramBot() {
-        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));;
+    @Autowired
+    public TelegramBot(TelegramUserService telegramUserService) {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), telegramUserService);;
     }
 
     @Override
