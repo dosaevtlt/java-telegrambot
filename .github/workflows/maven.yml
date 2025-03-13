@@ -26,6 +26,7 @@ jobs:
       uses: mirromutth/mysql-action@v1.1
       with:
         container port: 3307
+        mysql version: '8.0.15'
         mysql database: 'dev_tb_db'
         mysql root password: 'root'
         mysql user: 'dev_tb_db_user'
