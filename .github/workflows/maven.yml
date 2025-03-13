@@ -42,7 +42,7 @@ jobs:
         TEST_MYSQL_PORT: ${{ secrets.TEST_MYSQL_PORT }}
         TEST_MYSQL_USER: ${{ secrets.TEST_MYSQL_USER }}
         TEST_MYSQL_PASS: ${{ secrets.TEST_MYSQL_PASS }}
-      run: mvn -Dspring.profiles.active=github -B package --file pom.xml
+      run: mvn -Dspring.profiles.active=test -B package --file pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
